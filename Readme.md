@@ -1,7 +1,7 @@
 # Личный проект «Кексобукинг» [![Build status][travis-image]][travis-url]
 
 * Студент: [Андрей Карпов](https://up.htmlacademy.ru/javascript/19/user/480839).
-* Наставник: [Алексей Зольников] (https://htmlacademy.ru/profile/id870391).
+* Наставник: [Алексей Зольников](https://htmlacademy.ru/profile/id870391).
 
 ---
 
