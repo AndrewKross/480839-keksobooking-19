@@ -87,8 +87,10 @@ var createLocations = function (number, x) { // функция создания 
 };
 
 var screenWidth = 1200;
-var pinSize = 62;
-var offerBlockWidth = screenWidth - pinSize - (pinSize / 2);
+var pinWidth = 50;
+var pinHeight = 70;
+
+var offerBlockWidth = screenWidth - pinWidth - (pinWidth / 2); // ширина блока объявлений
 var locations = createLocations(8, offerBlockWidth); // создаем массив локаций
 
 var getAd = function (number) { // функция создания массива объявлений, принимает на вход количество элементов для создания
@@ -118,7 +120,7 @@ var generatePins = function (number) { // функция генерации ме
   for (var i = 0; i < number; i++) {
     var pin = pinTemplate.cloneNode(true);
     var pinImg = pin.querySelector('img');
-    pin.style = 'left: ' + (ads[i].location.x + (pinSize / 2)) + 'px; top: ' + (ads[i].location.y + (pinSize / 2)) + 'px;';
+    pin.style = 'left: ' + (ads[i].location.x + (pinWidth / 2)) + 'px; top: ' + (ads[i].location.y - (pinHeight / 2)) + 'px;';
     pinImg.src = ads[i].author.avatar;
     pinImg.alt = ads[i].offer.title;
     fragment.appendChild(pin);
