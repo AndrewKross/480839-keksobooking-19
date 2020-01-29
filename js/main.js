@@ -91,7 +91,7 @@ var pinSize = 62;
 var offerBlockWidth = screenWidth - pinSize - (pinSize / 2);
 var locations = createLocations(8, offerBlockWidth); // создаем массив локаций
 
-var getAd = function (number, authors, offers, locations) { // функция создания массива объявлений, принимает на вход количество элементов для создания, массив авторов, предложений и локаций
+var getAd = function (number) { // функция создания массива объявлений, принимает на вход количество элементов для создания
   var ads = [];
 
   for (var i = 0; i < number; i++) {
@@ -107,11 +107,11 @@ var getAd = function (number, authors, offers, locations) { // функция с
 
 var ads = getAd(8, authors, offers, locations); // генерируем массив объявлений
 
-var map = document.querySelector('.map'); 
+var map = document.querySelector('.map');
 map.classList.remove('map--faded');
 
-var generatePins = function (number, ads) { // функция генерации меток, принимает на вход количество меток и массив с объявлениями
-  var pinTemplate = document.querySelector('#pin').content.querySelector('.map__pin'); 
+var generatePins = function (number) { // функция генерации меток, принимает на вход количество меток
+  var pinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
   var mapPins = document.querySelector('.map__pins');
   var fragment = document.createDocumentFragment();
 
