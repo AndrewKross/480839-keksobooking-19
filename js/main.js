@@ -126,4 +126,4 @@ var generatePins = function (number) { // функция генерации ме
   mapPins.appendChild(fragment);
 };
 
-generatePins(8, ads); // генерируем метки
+generatePins(8); // генерируем метки
