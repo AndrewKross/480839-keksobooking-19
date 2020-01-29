@@ -97,8 +97,8 @@ var getAd = function (number, authors, offers, locations) { // функция с
   for (var i = 0; i < number; i++) {
     var ad = {};
     ad.author = authors[getRandom(authors)];
-    ad.offer = offers[getRandom(offers)];
-    ad.location = locations[getRandom(locations)];
+    ad.offer = offers[i];
+    ad.location = locations[i];
 
     ads.push(ad);
   }
