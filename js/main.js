@@ -120,7 +120,7 @@ var generatePins = function (number) { // функция генерации ме
   for (var i = 0; i < number; i++) {
     var pin = pinTemplate.cloneNode(true);
     var pinImg = pin.querySelector('img');
-    pin.style = 'left: ' + (ads[i].location.x + (pinWidth / 2)) + 'px; top: ' + (ads[i].location.y - (pinHeight / 2)) + 'px;';
+    pin.style = 'left: ' + (ads[i].location.x + (pinWidth / 2)) + 'px; top: ' + (ads[i].location.y - pinHeight) + 'px;';
     pinImg.src = ads[i].author.avatar;
     pinImg.alt = ads[i].offer.title;
     fragment.appendChild(pin);
