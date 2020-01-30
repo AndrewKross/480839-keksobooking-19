@@ -23,19 +23,17 @@ function getRandom(min, max) {
   return Math.floor(rand);
 }
 
-var createAuthors = function (number) { // функция создания массива авторов, принимает на вход количество элементов для создания
-  for (var i = 1; i < number + 1; i++) {
-    var author = {};
-    author.avatar = 'img/avatars/user0' + i + '.png';
-    authors.push(author);
-  }
-};
-
 var createOffer = function () {
   var offer = {};
   var location = {};
+  var author = {};
   var yMin = 130;
   var yMax = 630;
+
+  author.avatar = 'img/avatars/user0' + (getRandom(1, 8)) + '.png';
+
+  authors.push(author);
+
   offer.title = 'Предложение №' + Math.ceil(Math.random() * 100);
   offer.address = Math.ceil(Math.random() * 1000) + ', ' + Math.ceil(Math.random() * 1000);
   offer.price = Math.ceil(Math.random() * 100000);
@@ -64,7 +62,6 @@ var createOffers = function (number) { // функция создания мас
 
 var getAds = function (number) { // функция создания массива объявлений, принимает на вход количество элементов для создания
   createOffers(number); // создаем массив предложений
-  createAuthors(number); // создаем массив авторов
 
   for (var i = 0; i < number; i++) {
     var ad = {};
