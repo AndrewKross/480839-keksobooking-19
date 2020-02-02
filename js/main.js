@@ -14,8 +14,8 @@ var ENTER_KEY = 'Enter';
 
 
 var pinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
-var cardTemplate = document.querySelector('#card').content.querySelector('.map__card');
-var card = cardTemplate.cloneNode(true);
+// var cardTemplate = document.querySelector('#card').content.querySelector('.map__card');
+// var card = cardTemplate.cloneNode(true);
 var mapPins = document.querySelector('.map__pins');
 var mapPinMain = mapPins.querySelector('.map__pin--main');
 var fragment = document.createDocumentFragment();
