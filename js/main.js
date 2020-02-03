@@ -202,7 +202,6 @@ mapPinMain.addEventListener('keydown', function (evt) { // обработчик 
 
 formSubmitButton.addEventListener('click', function () { // обработчик клика по кнопке отправки формы
   if ((roomsNumberInput.value === '100') && (roomsCapacityInput.value !== '0')) {
-    roomsNumberInput.setCustomValidity('');
     roomsNumberInput.setCustomValidity('Пожалуйста, выберите вариант "не для гостей"');
   } else if (roomsNumberInput.value < roomsCapacityInput.value) {
     roomsNumberInput.setCustomValidity('Количество комнат не может быть меньше гостей!');
