@@ -188,20 +188,23 @@ var getPhotos = function (number) { // проверяем массив с фот
 
 disableFieldsets(); // отключает форму
 
-mapPinMain.addEventListener('mousedown', function (evt) {
+mapPinMain.addEventListener('mousedown', function (evt) { // обработчик нажатия лкм по стартовому пину
   if (evt.button === LEFT_MOUSE_BUTTON) {
     activatePage();
   }
 });
 
-mapPinMain.addEventListener('keydown', function (evt) {
+mapPinMain.addEventListener('keydown', function (evt) { // обработчик нажатия энтера по стартовому пину
   if (evt.key === ENTER_KEY) {
     activatePage();
   }
 });
 
-formSubmitButton.addEventListener('click', function () {
-  if (roomsNumberInput.value < roomsCapacityInput.value) {
+formSubmitButton.addEventListener('click', function () { // обработчик клика по кнопке отправки формы
+  if ((roomsNumberInput.value === '100') && (roomsCapacityInput.value !== '0')) {
+    roomsNumberInput.setCustomValidity('');
+    roomsNumberInput.setCustomValidity('Пожалуйста, выберите вариант "не для гостей"');
+  } else if (roomsNumberInput.value < roomsCapacityInput.value) {
     roomsNumberInput.setCustomValidity('Количество комнат не может быть меньше гостей!');
   } else {
     roomsNumberInput.setCustomValidity('');
