@@ -7,25 +7,56 @@ var PHOTOS = ['http://o0.github.io/assets/images/tokyo/hotel1.jpg', 'http://o0.g
 var SCREEN_WIDTH = 1200;
 var PIN_WIDTH = 50;
 var PIN_HEIGHT = 70;
+var DEFAULT_COORDS_Y = 462;
+var DEFAULT_COORDS_X = 602;
+var LEFT_MOUSE_BUTTON = 0;
+var ENTER_KEY = 'Enter';
+
 
 var pinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
-var cardTemplate = document.querySelector('#card').content.querySelector('.map__card');
-var card = cardTemplate.cloneNode(true);
+// var cardTemplate = document.querySelector('#card').content.querySelector('.map__card');
+// var card = cardTemplate.cloneNode(true);
 var mapPins = document.querySelector('.map__pins');
+var mapPinMain = mapPins.querySelector('.map__pin--main');
 var fragment = document.createDocumentFragment();
 var offers = [];
 var locations = [];
 var authors = [];
 var ads = [];
 var map = document.querySelector('.map');
+var form = document.querySelector('.ad-form');
+var formFieldsets = form.querySelectorAll('fieldset');
+var addressInput = document.getElementById('address');
+var roomsNumberInput = form.querySelector('#room_number');
+var roomsCapacityInput = form.querySelector('#capacity');
+var formSubmitButton = form.querySelector('.ad-form__submit');
 
 
-function getRandom(min, max) {
+var activatePage = function () { // функция для активации страницы
+  renderAds(8); // генерируем метки
+  enableFieldsets(); // включаем поля ввода
+  form.classList.remove('ad-form--disabled');
+  addressInput.value = DEFAULT_COORDS_X + ', ' + DEFAULT_COORDS_Y;
+};
+
+var disableFieldsets = function () { // функция для отключения формы
+  for (var i = 0; i < formFieldsets.length; i++) {
+    formFieldsets[i].setAttribute('disabled', '');
+  }
+};
+
+var enableFieldsets = function () { // функция для включения формы
+  for (var i = 0; i < formFieldsets.length; i++) {
+    formFieldsets[i].removeAttribute('disabled', '');
+  }
+};
+
+var getRandom = function (min, max) { // функция рандома
   var rand = min + Math.random() * (max - min);
   return Math.floor(rand);
-}
+};
 
-var generateArray = function (array) {
+var generateArray = function (array) { // функция генерации рандомного массива
   var newArray = [];
   var arraylength = getRandom(0, array.length + 1);
   for (var i = 0; i < arraylength; i++) {
@@ -34,7 +65,7 @@ var generateArray = function (array) {
   return newArray;
 };
 
-var createOffer = function () {
+var createOffer = function () { // функция создания массива одного предложения
   var offer = {};
   var location = {};
   var author = {};
@@ -102,7 +133,7 @@ var renderAds = function (number) { // функция генерации мет�
   mapPins.appendChild(fragment);
 };
 
-var getHouseType = function (number) {
+/* var getHouseType = function (number) {
   if (ads[number].offer.type === 'flat') {
     return 'Квартира';
   } else if (ads[number].offer.type === 'bungalo') {
@@ -139,7 +170,7 @@ var getPhotos = function (number) { // проверяем массив с фот
   }
 };
 
-var renderCard = function (ad) { // функция отрисовки карточки, принимает на вход элемент массива ads
+ var renderCard = function (ad) { // функция отрисовки карточки, принимает на вход элемент массива ads
 
   card.querySelector('.popup__title').textContent = ad.offer.title;
   card.querySelector('.popup__text--address').textContent = ad.offer.address;
@@ -153,7 +184,31 @@ var renderCard = function (ad) { // функция отрисовки карто
   card.querySelector('.popup__avatar').src = ad.author.avatar;
 
   mapPins.after(card);
-};
+}; */
 
-renderAds(8); // генерируем метки
-renderCard(ads[0]); // генерирует карточку
+disableFieldsets(); // отключает форму
+
+mapPinMain.addEventListener('mousedown', function (evt) { // обработчик нажатия лкм по стартовому пину
+  if (evt.button === LEFT_MOUSE_BUTTON) {
+    activatePage();
+  }
+});
+
+mapPinMain.addEventListener('keydown', function (evt) { // обработчик нажатия энтера по стартовому пину
+  if (evt.key === ENTER_KEY) {
+    activatePage();
+  }
+});
+
+formSubmitButton.addEventListener('click', function () { // обработчик клика по кнопке отправки формы
+  if ((roomsNumberInput.value === '100') && (roomsCapacityInput.value !== '0')) {
+    roomsNumberInput.setCustomValidity('Пожалуйста, выберите вариант "не для гостей"');
+  } else if (roomsNumberInput.value < roomsCapacityInput.value) {
+    roomsNumberInput.setCustomValidity('Количество комнат не может быть меньше гостей!');
+  } else {
+    roomsNumberInput.setCustomValidity('');
+  }
+});
+
+
+// renderCard(ads[0]); // генерирует карточку
