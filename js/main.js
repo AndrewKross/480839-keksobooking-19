@@ -39,12 +39,14 @@ var formSubmitButton = form.querySelector('.ad-form__submit');
 
 var activatePage = function () { // функция для активации страницы
   renderAds(8); // генерируем метки
-  renderCards(8); // генерирует карточки
+  mapPins.after(card);
+  card.classList.add('hidden');
   enableFieldsets(); // включаем поля ввода
   form.classList.remove('ad-form--disabled');
   addressInput.value = DEFAULT_COORDS_X + ', ' + DEFAULT_COORDS_Y;
   mapPinMain.removeEventListener('keydown', activatePageOnEnterPress); // удаляем стартовые обработчики
   mapPinMain.removeEventListener('mousedown', activatePageOnLeftClick);
+  togglePin(); // функция переключения и закрытия пина
 };
 
 var disableFieldsets = function () { // функция для отключения формы
@@ -130,25 +132,16 @@ var getAds = function (number) { // функция создания массив
 var renderAds = function (number) { // функция генерации меток, принимает на вход количество меток
   map.classList.remove('map--faded'); // отображаем карту
   getAds(number); // генерируем массив объявлений
-  var togglePin = function (currentPin, i) {
-    currentPin.addEventListener('click', function () {
-      var cards = document.querySelectorAll('.map__card');
-      for (var j = 0; j < cards.length; j++) {
-        cards[j].classList.add('hidden');
-      }
-      document.querySelector('.map__card:nth-child(' + (i + 2) + ')').classList.remove('hidden');
-    });
-  };
   for (var i = 0; i < number; i++) {
     var pin = pinTemplate.cloneNode(true);
     var pinImg = pin.querySelector('img');
     pin.style = 'left: ' + (ads[i].location.x + (PIN_WIDTH / 2)) + 'px; top: ' + (ads[i].location.y - PIN_HEIGHT) + 'px;';
     pinImg.src = ads[i].author.avatar;
     pinImg.alt = ads[i].offer.title;
-    togglePin(pin, i);
     fragment.appendChild(pin);
   }
   mapPins.appendChild(fragment);
+
 };
 
 var getHouseType = function (number) {
@@ -174,13 +167,18 @@ var getRoomsFor = function (number) {
 var getFeatures = function (number) { // проверяем массив с удобствами
   for (var i = 0; i < FEATURES.length; i++) {
     if (ads[number].offer.features.indexOf(FEATURES[i]) < 0) {
-      card.querySelector('.popup__feature--' + FEATURES[i]).remove();
+      card.querySelector('.popup__feature--' + FEATURES[i]).classList.add('visually-hidden');
+    } else {
+      card.querySelector('.popup__feature--' + FEATURES[i]).classList.remove('visually-hidden');
     }
   }
 };
 var getPhotos = function (number) { // проверяем массив с фото и отрисовываем
-  var photoCopy = card.querySelector('.popup__photo').cloneNode(true);
-  card.querySelector('.popup__photo').remove();
+  var photoCopy = cardTemplate.querySelector('.popup__photo').cloneNode(true);
+  var cards = card.querySelectorAll('.popup__photo');
+  for (var j = 0; j < cards.length; j++) {
+    cards[j].remove();
+  }
   for (var i = 0; i < ads[number].offer.photos.length; i++) {
     var photo = photoCopy.cloneNode(true);
     photo.src = ads[number].offer.photos[i];
@@ -188,7 +186,7 @@ var getPhotos = function (number) { // проверяем массив с фот
   }
 };
 
-var renderCard = function (number) { // функция отрисовки карточки, принимает на вход элемент массива ads
+var renderCard = function (number) { // функция отрисовки карточки, принимает на вход i-ый элемент массива ads
   card.querySelector('.popup__title').textContent = ads[number].offer.title;
   card.querySelector('.popup__text--address').textContent = ads[number].offer.address;
   card.querySelector('.popup__text--price').textContent = (ads[number].offer.price) + '₽/ночь';
@@ -203,25 +201,27 @@ var renderCard = function (number) { // функция отрисовки кар
   return card;
 };
 
-var renderCards = function (number) { // функция создания карточек объявлений
-  var closeCard = function (currentCard) { // функция закрытия карточек
-    currentCard.querySelector('.popup__close').addEventListener('click', function () {
-      currentCard.classList.add('hidden');
-    });
-    document.addEventListener('keydown', function (evt) {
-      if (evt.key === ESCAPE_KEY) {
-        currentCard.classList.add('hidden');
-      }
-    });
-  };
-  for (var i = 0; i < number; i++) {
-    card = cardTemplate.cloneNode(true);
-    var generatedCard = renderCard(i);
-    generatedCard.classList.add('hidden');
-    closeCard(generatedCard);
-    fragment.appendChild(generatedCard);
+var openCurrentPin = function (currentPin) { // функция - обработчик для переключения между пинами
+  var generatedPins = mapPins.querySelectorAll('.map__pin');
+  generatedPins[currentPin].addEventListener('click', function () {
+    card.classList.remove('hidden');
+    renderCard(currentPin - 1); // перерисовывает карточку с и-тым элементом массива - 1(главный пин)
+  });
+};
+
+var togglePin = function () {
+  for (var i = 1; i <= 8; i++) { // открывает пин
+    openCurrentPin(i);
   }
-  mapPins.after(fragment);
+
+  document.addEventListener('keydown', function (evt) { // закрывает пин
+    if (evt.key === ESCAPE_KEY) {
+      card.classList.add('hidden');
+    }
+  });
+  card.querySelector('.popup__close').addEventListener('click', function () {
+    card.classList.add('hidden');
+  });
 };
 
 var activatePageOnLeftClick = function (evt) { // активация страницы
@@ -236,38 +236,55 @@ var activatePageOnEnterPress = function (evt) {
   }
 };
 
+var sendForm = function () { // валидация формы перед отправкой
+  var roomInputValidation = function () {
+    if ((roomsNumberInput.value === '100') && (roomsCapacityInput.value !== '0')) { // валидация комнат и гостей
+      return 'Пожалуйста, выберите вариант "не для гостей"';
+    } else if (roomsNumberInput.value < roomsCapacityInput.value) {
+      return 'Количество комнат не может быть меньше гостей!';
+    } return false;
+  };
+
+  (function () {
+    if (roomType.value === 'bungalo') { // валидация цены
+      roomPrice.setAttribute('min', 0);
+    } else if (roomType.value === 'flat') {
+      roomPrice.setAttribute('min', 1000);
+    } else if (roomType.value === 'house') {
+      roomPrice.setAttribute('min', 5000);
+    } else if (roomType.value === 'palace') {
+      roomPrice.setAttribute('min', 10000);
+    }
+  })();
+
+  if (roomInputValidation()) {
+    return roomsNumberInput.setCustomValidity(roomInputValidation());
+  } else {
+    return roomsNumberInput.setCustomValidity('');
+  }
+};
+
 // ^^^^^^^^^^^^^ выше объявления, ниже вызовы vvvvvvvvvvvvvv
 
-disableFieldsets(); // отключает форму при загрузке страницы
+(function () { // функция запуска страницы
 
-mapPinMain.addEventListener('mousedown', activatePageOnLeftClick); // обработчик нажатия лкм по стартовому пину
-mapPinMain.addEventListener('keydown', activatePageOnEnterPress); // обработчик нажатия энтера по стартовому пину
+  disableFieldsets(); // отключает форму при загрузке страницы
+
+  mapPinMain.addEventListener('mousedown', activatePageOnLeftClick); // обработчик нажатия лкм по стартовому пину
+  mapPinMain.addEventListener('keydown', activatePageOnEnterPress); // обработчик нажатия энтера по стартовому пину
+})();
+
+(function () { // функция валидации формы
+
+  roomTimeIn.addEventListener('change', function () { // валидация времени
+    roomTimeOut.value = roomTimeIn.value;
+  });
+
+  roomTimeOut.addEventListener('change', function () {
+    roomTimeIn.value = roomTimeOut.value;
+  });
+
+  formSubmitButton.addEventListener('click', sendForm); // обработчик клика по кнопке отправки формы
+})();
 
 
-formSubmitButton.addEventListener('click', function () { // обработчик клика по кнопке отправки формы
-  if ((roomsNumberInput.value === '100') && (roomsCapacityInput.value !== '0')) { // валидация комнат и гостей
-    roomsNumberInput.setCustomValidity('Пожалуйста, выберите вариант "не для гостей"');
-  } else if (roomsNumberInput.value < roomsCapacityInput.value) {
-    roomsNumberInput.setCustomValidity('Количество комнат не может быть меньше гостей!');
-  } else {
-    roomsNumberInput.setCustomValidity('');
-  }
-
-  if (roomType.value === 'bungalo') { // валидация цены
-    roomPrice.setAttribute('min', 0);
-  } else if (roomType.value === 'flat') {
-    roomPrice.setAttribute('min', 1000);
-  } else if (roomType.value === 'house') {
-    roomPrice.setAttribute('min', 5000);
-  } else if (roomType.value === 'palace') {
-    roomPrice.setAttribute('min', 10000);
-  }
-});
-
-roomTimeIn.addEventListener('change', function () { // валидация времени
-  roomTimeOut.value = roomTimeIn.value;
-});
-
-roomTimeOut.addEventListener('change', function () {
-  roomTimeIn.value = roomTimeOut.value;
-});
