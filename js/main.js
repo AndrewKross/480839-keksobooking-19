@@ -31,7 +31,7 @@ var addressInput = document.getElementById('address');
 var roomsNumberInput = form.querySelector('#room_number');
 var roomsCapacityInput = form.querySelector('#capacity');
 var roomType = form.querySelector('#type');
-var roomPrice = form.querySelector('#price');
+var formPrice = form.querySelector('#price');
 var roomTimeIn = form.querySelector('#timein');
 var roomTimeOut = form.querySelector('#timeout');
 var formSubmitButton = form.querySelector('.ad-form__submit');
@@ -268,19 +268,19 @@ var sendForm = function () { // валидация формы перед отп�
   }
 };
 
-var validateRoomPriceOnChange = function () {
+var validatePriceOnChange = function () {
   if (roomType.value === 'bungalo') { // валидация цены
-    roomPrice.setAttribute('min', 0);
-    roomPrice.setAttribute('placeholder', 0);
+    formPrice.setAttribute('min', 0);
+    formPrice.setAttribute('placeholder', 0);
   } else if (roomType.value === 'flat') {
-    roomPrice.setAttribute('min', 1000);
-    roomPrice.setAttribute('placeholder', 1000);
+    formPrice.setAttribute('min', 1000);
+    formPrice.setAttribute('placeholder', 1000);
   } else if (roomType.value === 'house') {
-    roomPrice.setAttribute('min', 5000);
-    roomPrice.setAttribute('placeholder', 5000);
+    formPrice.setAttribute('min', 5000);
+    formPrice.setAttribute('placeholder', 5000);
   } else if (roomType.value === 'palace') {
-    roomPrice.setAttribute('min', 10000);
-    roomPrice.setAttribute('placeholder', 10000);
+    formPrice.setAttribute('min', 10000);
+    formPrice.setAttribute('placeholder', 10000);
   }
 };
 
@@ -299,7 +299,7 @@ disableFieldsets(); // отключает форму при загрузке с�
 
 mapPinMain.addEventListener('mousedown', activatePageOnLeftClick); // обработчик нажатия лкм по стартовому пину
 mapPinMain.addEventListener('keydown', activatePageOnEnterPress); // обработчик нажатия энтера по стартовому пину
-roomType.addEventListener('change', validateRoomPriceOnChange); // обработчик валидации цены при изменении типа комнаты
+roomType.addEventListener('change', validatePriceOnChange); // обработчик валидации цены при изменении типа комнаты
 roomTimeIn.addEventListener('change', syncRoomTimeOnChange); // валидация времени
 roomTimeOut.addEventListener('change', syncRoomTimeOnChange);
 formSubmitButton.addEventListener('click', sendForm); // обработчик клика по кнопке отправки формы
