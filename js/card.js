@@ -64,7 +64,7 @@
 
   window.card = {
     renderCard: renderCard,
-    mapCard: card
+    getMapCardElement: card
   };
 
 })();

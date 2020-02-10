@@ -15,9 +15,9 @@
     for (var i = 0; i < number; i++) {
       var pin = pinTemplate.cloneNode(true);
       var pinImg = pin.querySelector('img');
-      pin.style = 'left: ' + (window.data.ads[i].location.x + (PIN_WIDTH / 2)) + 'px; top: ' + (window.data.ads[i].location.y - PIN_HEIGHT) + 'px;';
-      pinImg.src = window.data.ads[i].author.avatar;
-      pinImg.alt = window.data.ads[i].offer.title;
+      pin.style = 'left: ' + (window.data.getAdsElement[i].location.x + (PIN_WIDTH / 2)) + 'px; top: ' + (window.data.getAdsElement[i].location.y - PIN_HEIGHT) + 'px;';
+      pinImg.src = window.data.getAdsElement[i].author.avatar;
+      pinImg.alt = window.data.getAdsElement[i].offer.title;
       fragment.appendChild(pin);
     }
     return fragment;

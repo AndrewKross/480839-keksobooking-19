@@ -84,7 +84,7 @@
   window.data = {
     getAds: getAds,
     FEATURES: FEATURES,
-    ads: ads,
+    getAdsElement: ads,
     NUMBER_OF_PINS: NUMBER_OF_PINS
   };
 

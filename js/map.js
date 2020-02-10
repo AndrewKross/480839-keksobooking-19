@@ -8,7 +8,7 @@
   var DEFAULT_COORDS_Y = 462;
   var DEFAULT_COORDS_X = 602;
 
-  var card = window.card.mapCard;
+  var card = window.card.getMapCardElement;
   var mapPins = document.querySelector('.map__pins');
   var mapPinMain = mapPins.querySelector('.map__pin--main');
   var form = document.querySelector('.ad-form');
@@ -19,7 +19,7 @@
     var generatedPins = mapPins.querySelectorAll('.map__pin:not(.map__pin--main)');
     var generatePinsOnClick = function () {
       card.classList.remove('hidden');
-      window.card.renderCard(window.data.ads[currentPin]);// перерисовывает карточку с и-тым элементом массива
+      window.card.renderCard(window.data.getAdsElement[currentPin]);// перерисовывает карточку с и-тым элементом массива
     };
     generatedPins[currentPin].addEventListener('click', generatePinsOnClick);
   };
