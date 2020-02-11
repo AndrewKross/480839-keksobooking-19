@@ -26,11 +26,11 @@
     return ' комнат для ';
   };
   var renderFeatures = function (ad) { // проверяем массив с удобствами
-    for (var i = 0; i < window.data.FEATURES.length; i++) {
-      if (ad.offer.features.indexOf(window.data.FEATURES[i]) < 0) {
-        card.querySelector('.popup__feature--' + window.data.FEATURES[i]).classList.add('visually-hidden');
+    for (var i = 0; i < window.offer.FEATURES.length; i++) {
+      if (ad.offer.features.indexOf(window.offer.FEATURES[i]) < 0) {
+        card.querySelector('.popup__feature--' + window.offer.FEATURES[i]).classList.add('visually-hidden');
       } else {
-        card.querySelector('.popup__feature--' + window.data.FEATURES[i]).classList.remove('visually-hidden');
+        card.querySelector('.popup__feature--' + window.offer.FEATURES[i]).classList.remove('visually-hidden');
       }
     }
   };
