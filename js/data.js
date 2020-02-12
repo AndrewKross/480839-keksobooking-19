@@ -2,37 +2,26 @@
 // ------------------ модуль создания массивов с данными для объявлений
 (function () {
 
-  var NUMBER_OF_PINS = 8;
+  var onError = function (errorMessage) {
+    var node = document.createElement('div');
+    node.style = 'z-index: 100; margin: 0 30%; text-align: center; background-color: red;';
+    node.style.position = 'absolute';
+    node.style.left = 0;
+    node.style.right = 0;
+    node.style.fontSize = '24px';
 
-  var ads = [];
-
-
-  var createOffers = function (number) { // функция создания массива предложений, принимает на вход количество элементов для создания
-    for (var i = 0; i < number; i++) {
-      window.offer.createOffer();
-    }
+    node.textContent = errorMessage;
+    document.body.insertAdjacentElement('afterbegin', node);
   };
 
-  var getAds = function (number) { // функция создания массива из объектов объявлений, принимает на вход количество элементов для создания
-    createOffers(number); // создаем n-ое кол-во предложений
-    for (var i = 0; i < number; i++) {
-      var ad = {};
-      ad.author = window.offer.getAuthors[i];
-      ad.offer = window.offer.getOffers[i];
-      ad.location = window.offer.getLocations[i];
-
-      ads.push(ad);
-    }
-    return ads;
+  var onLoad = function (response) {
+    window.data.getAdsElement = response;
   };
 
   window.data = {
-    getAds: getAds,
-    getAdsElement: ads,
-    NUMBER_OF_PINS: NUMBER_OF_PINS
   };
 
-  ads = getAds(NUMBER_OF_PINS); // генерируем массив
+  window.backend.load(onLoad, onError);
 
 })();
 

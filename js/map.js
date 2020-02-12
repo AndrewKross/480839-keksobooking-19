@@ -65,11 +65,11 @@
   };
 
   var activatePage = function () { // функция для активации страницы
-    var createdPins = window.pin.createPins(window.data.NUMBER_OF_PINS); // создаем метки
+    var createdPins = window.pin.createPins(window.data.getAdsElement.length); // создаем метки
     mapPins.append(createdPins); // добавляем их в ДОМ
     mapPins.after(card); // добавляем в ДОМ карточку
     card.classList.add('hidden'); // и скрываем ее
-    togglePin(window.data.NUMBER_OF_PINS); // добавляем обработчики пинам и связываем с карточкой
+    togglePin(window.data.getAdsElement.length); // добавляем обработчики пинам и связываем с карточкой
     window.form.enableFieldsets(); // включаем поля ввода
     form.classList.remove('ad-form--disabled'); // убираем закрывашку с формы
     addressInput.value = DEFAULT_COORDS_X + ', ' + DEFAULT_COORDS_Y; // вписываем дефолтные координаты с главного пина
