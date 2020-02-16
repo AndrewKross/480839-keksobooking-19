@@ -65,7 +65,7 @@
   };
 
   var activatePage = function () { // функция для активации страницы
-    var createdPins = window.pin.createPins(window.data.getAdsElement.length); // создаем метки
+    var createdPins = window.pin.createPins(window.data.getAdsElement); // создаем метки
     mapPins.append(createdPins); // добавляем их в ДОМ
     mapPins.after(card); // добавляем в ДОМ карточку
     card.classList.add('hidden'); // и скрываем ее
@@ -79,5 +79,10 @@
 
   mapPinMain.addEventListener('mousedown', activatePageOnLeftClick); // обработчик нажатия лкм по стартовому пину
   mapPinMain.addEventListener('keydown', activatePageOnEnterPress); // обработчик нажатия энтера по стартовому пину
+
+  window.map = {
+    activatePageOnLeftClick: activatePageOnLeftClick,
+    activatePageOnEnterPress: activatePageOnEnterPress
+  };
 
 })();

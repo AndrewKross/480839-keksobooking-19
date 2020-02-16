@@ -2,14 +2,12 @@
 // ------------------ модуль создания массивов с данными для объявлений
 (function () {
 
-  var onLoad = function (response) {
-    window.data.getAdsElement = response;
-  };
-
   window.data = {
+    getAdsElement: [],
+    onLoad: function (response) {
+      window.data.getAdsElement = response;
+    }
   };
-
-  window.backend.load(onLoad, window.utils.onError);
 
 })();
 
