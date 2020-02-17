@@ -15,18 +15,19 @@
   var addressInput = document.getElementById('address');
 
 
-  var openCurrentPin = function (currentPin) { // функция - обработчик для переключения между пинами
+  var openCurrentPin = function (currentPin, array) { // функция - обработчик для переключения между пинами
     var generatedPins = mapPins.querySelectorAll('.map__pin:not(.map__pin--main)');
     var generatePinsOnClick = function () {
       card.classList.remove('hidden');
-      window.card.renderCard(window.data.getAdsElement[currentPin]);// перерисовывает карточку с и-тым элементом массива
+      window.card.renderCard(array[currentPin]);// перерисовывает карточку с и-тым элементом массива
     };
     generatedPins[currentPin].addEventListener('click', generatePinsOnClick);
   };
 
-  var togglePin = function (number) { // фнукция для добавления обработчиков на все пины для открытия/закрытия карточки
-    for (var i = 0; i < number; i++) { // добавляем пинам обработчики-ссылки на нужные данные для карточки
-      openCurrentPin(i);
+  var togglePin = function (array) { // фнукция для добавления обработчиков на все пины для открытия/закрытия карточки
+    var arrayLength = array.length > window.pin.MAX_PINS_NUMBER ? window.pin.MAX_PINS_NUMBER : array.length;
+    for (var i = 0; i < arrayLength; i++) { // добавляем пинам обработчики-ссылки на нужные данные для карточки
+      openCurrentPin(i, array);
     }
     document.addEventListener('keydown', function (evt) { // обработчик для закрытия карточки Esc-ом
       isEscEvent(evt, closeCard);
@@ -66,11 +67,10 @@
 
   var onLoad = function (response) {
     window.data.getAdsElement = response;
-    var createdPins = window.pin.createPins(window.data.getAdsElement); // создаем метки
-    mapPins.append(createdPins); // добавляем их в ДОМ
+    window.pin.createPins(window.data.getAdsElement); // создаем метки
     mapPins.after(card); // добавляем в ДОМ карточку
     card.classList.add('hidden'); // и скрываем ее
-    togglePin(window.data.getAdsElement.length); // добавляем обработчики пинам и связываем с карточкой
+    togglePin(window.data.getAdsElement); // добавляем обработчики пинам и связываем с карточкой
   };
 
   var activatePage = function () { // функция для активации страницы
@@ -87,7 +87,8 @@
 
   window.map = {
     activatePageOnLeftClick: activatePageOnLeftClick,
-    activatePageOnEnterPress: activatePageOnEnterPress
+    activatePageOnEnterPress: activatePageOnEnterPress,
+    togglePin: togglePin
   };
 
 })();
