@@ -25,8 +25,7 @@
   };
 
   var togglePin = function (array) { // фнукция для добавления обработчиков на все пины для открытия/закрытия карточки
-    var arrayLength = array.length > window.pin.MAX_PINS_NUMBER ? window.pin.MAX_PINS_NUMBER : array.length;
-    for (var i = 0; i < arrayLength; i++) { // добавляем пинам обработчики-ссылки на нужные данные для карточки
+    for (var i = 0; i < array.length && i < window.pin.MAX_PINS_NUMBER; i++) { // добавляем пинам обработчики-ссылки на нужные данные для карточки
       openCurrentPin(i, array);
     }
     document.addEventListener('keydown', function (evt) { // обработчик для закрытия карточки Esc-ом

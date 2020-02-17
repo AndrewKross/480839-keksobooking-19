@@ -15,8 +15,7 @@
   window.pin = {
     createPins: function (array) {
       map.classList.remove('map--faded'); // отображаем карту
-      var arrayLength = array.length > MAX_PINS_NUMBER ? MAX_PINS_NUMBER : array.length;
-      for (var i = 0; i < arrayLength; i++) {
+      for (var i = 0; i < array.length && i < MAX_PINS_NUMBER; i++) {
         var pin = pinTemplate.cloneNode(true);
         var pinImg = pin.querySelector('img');
         pin.style.left = array[i].location.x - (PIN_WIDTH / 2) + 'px';
