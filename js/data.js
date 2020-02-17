@@ -3,10 +3,7 @@
 (function () {
 
   window.data = {
-    getAdsElement: [],
-    onLoad: function (response) {
-      window.data.getAdsElement = response;
-    }
+    getAdsElement: []
   };
 
 })();

@@ -64,12 +64,17 @@
     isEnterEvent(evt, activatePage);
   };
 
-  var activatePage = function () { // функция для активации страницы
+  var onLoad = function (response) {
+    window.data.getAdsElement = response;
     var createdPins = window.pin.createPins(window.data.getAdsElement); // создаем метки
     mapPins.append(createdPins); // добавляем их в ДОМ
     mapPins.after(card); // добавляем в ДОМ карточку
     card.classList.add('hidden'); // и скрываем ее
     togglePin(window.data.getAdsElement.length); // добавляем обработчики пинам и связываем с карточкой
+  };
+
+  var activatePage = function () { // функция для активации страницы
+    window.backend.load(onLoad, window.utils.onError);
     window.form.enableFieldsets(); // включаем поля ввода
     form.classList.remove('ad-form--disabled'); // убираем закрывашку с формы
     addressInput.value = DEFAULT_COORDS_X + ', ' + DEFAULT_COORDS_Y; // вписываем дефолтные координаты с главного пина

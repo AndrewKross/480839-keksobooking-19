@@ -11,17 +11,25 @@
   var roomTimeOut = form.querySelector('#timeout');
   var formSubmitButton = form.querySelector('.ad-form__submit');
   var formFieldsets = form.querySelectorAll('fieldset');
+  var mapFiltersForm = document.querySelector('.map__filters');
+  var mapFilters = mapFiltersForm.querySelectorAll('.map__filter, .map__features');
 
-  var disableFieldsets = function () { // функция для отключения формы
-    for (var i = 0; i < formFieldsets.length; i++) {
-      formFieldsets[i].setAttribute('disabled', '');
-    }
+  var disableFieldsets = function () { // функция для отключения форм
+    formFieldsets.forEach(function (it) {
+      it.setAttribute('disabled', '');
+    });
+    mapFilters.forEach(function (it) {
+      it.classList.add('visually-hidden');
+    });
   };
 
-  var enableFieldsets = function () { // функция для включения формы
-    for (var i = 0; i < formFieldsets.length; i++) {
-      formFieldsets[i].removeAttribute('disabled', '');
-    }
+  var enableFieldsets = function () { // функция для включения форм
+    formFieldsets.forEach(function (it) {
+      it.removeAttribute('disabled', '');
+    });
+    mapFilters.forEach(function (it) {
+      it.classList.remove('visually-hidden');
+    });
   };
 
   var sendForm = function () { // валидация формы перед отправкой
