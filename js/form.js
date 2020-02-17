@@ -36,8 +36,10 @@
     if (roomInputValidation()) {
       return roomsNumberInput.setCustomValidity(roomInputValidation());
     } else {
+      window.init.deactivatePage();
       return roomsNumberInput.setCustomValidity('');
     }
+
   };
 
   var validatePriceOnChange = function () {
@@ -65,7 +67,8 @@
   };
 
   window.form = {
-    enableFieldsets: enableFieldsets
+    enableFieldsets: enableFieldsets,
+    disableFieldsets: disableFieldsets
   };
 
 

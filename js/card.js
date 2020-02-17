@@ -2,6 +2,8 @@
 // ------------------ модуль создания и отрисовки карточки объявлений
 (function () {
 
+  var FEATURES = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
+
   var cardTemplate = document.querySelector('#card').content.querySelector('.map__card');
   var card = cardTemplate.cloneNode(true);
 
@@ -26,11 +28,11 @@
     return ' комнат для ';
   };
   var renderFeatures = function (ad) { // проверяем массив с удобствами
-    for (var i = 0; i < window.offer.FEATURES.length; i++) {
-      if (ad.offer.features.indexOf(window.offer.FEATURES[i]) < 0) {
-        card.querySelector('.popup__feature--' + window.offer.FEATURES[i]).classList.add('visually-hidden');
+    for (var i = 0; i < FEATURES.length; i++) {
+      if (ad.offer.features.indexOf(FEATURES[i]) < 0) {
+        card.querySelector('.popup__feature--' + FEATURES[i]).classList.add('visually-hidden');
       } else {
-        card.querySelector('.popup__feature--' + window.offer.FEATURES[i]).classList.remove('visually-hidden');
+        card.querySelector('.popup__feature--' + FEATURES[i]).classList.remove('visually-hidden');
       }
     }
   };
@@ -63,6 +65,7 @@
   };
 
   window.card = {
+    FEATURES: FEATURES,
     renderCard: renderCard,
     getMapCardElement: card
   };

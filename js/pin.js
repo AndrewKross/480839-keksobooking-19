@@ -10,14 +10,15 @@
   var pinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
 
 
-  window.pin.createPins = function (number) { // функция генерации меток, принимает на вход количество меток
+  window.pin.createPins = function (array) {
     map.classList.remove('map--faded'); // отображаем карту
-    for (var i = 0; i < number; i++) {
+    for (var i = 0; i < array.length; i++) {
       var pin = pinTemplate.cloneNode(true);
       var pinImg = pin.querySelector('img');
-      pin.style = 'left: ' + (window.data.getAdsElement[i].location.x + (PIN_WIDTH / 2)) + 'px; top: ' + (window.data.getAdsElement[i].location.y - PIN_HEIGHT) + 'px;';
-      pinImg.src = window.data.getAdsElement[i].author.avatar;
-      pinImg.alt = window.data.getAdsElement[i].offer.title;
+      pin.style.left = array[i].location.x - (PIN_WIDTH / 2) + 'px';
+      pin.style.top = array[i].location.y - PIN_HEIGHT + 'px';
+      pinImg.src = array[i].author.avatar;
+      pinImg.alt = array[i].offer.title;
       fragment.appendChild(pin);
     }
     return fragment;
