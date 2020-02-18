@@ -23,7 +23,7 @@
     };
 
     var getFiltredArray = function () {
-      switch (housingType.value) { // валидация цены
+      switch (housingType.value) {
         case ('bungalo'):
           return filterBy('bungalo');
         case ('flat'):

@@ -28,10 +28,10 @@
     for (var i = 0; i < array.length && i < window.pin.MAX_PINS_NUMBER; i++) { // добавляем пинам обработчики-ссылки на нужные данные для карточки
       openCurrentPin(i, array);
     }
-    document.addEventListener('keydown', function (evt) { // обработчик для закрытия карточки Esc-ом
+    document.addEventListener('keydown', function (evt) {
       isEscEvent(evt, closeCard);
     });
-    card.querySelector('.popup__close').addEventListener('click', closeCard); // обработчик для закрытия карточки кликом
+    card.querySelector('.popup__close').addEventListener('click', closeCard);
   };
 
   var isEscEvent = function (evt, action) {
@@ -56,7 +56,7 @@
     card.classList.add('hidden');
   };
 
-  var activatePageOnLeftClick = function (evt) { // активация страницы
+  var activatePageOnLeftClick = function (evt) {
     isLeftClick(evt, activatePage);
   };
 
@@ -70,19 +70,19 @@
     mapPins.after(card); // добавляем в ДОМ карточку
     card.classList.add('hidden'); // и скрываем ее
     togglePin(window.data.getAdsElement); // добавляем обработчики пинам и связываем с карточкой
+    window.form.enableFieldsets(); // включаем поля ввода
+    form.classList.remove('ad-form--disabled'); // убираем закрывашку с формы
   };
 
   var activatePage = function () { // функция для активации страницы
     window.backend.load(onLoad, window.utils.onError);
-    window.form.enableFieldsets(); // включаем поля ввода
-    form.classList.remove('ad-form--disabled'); // убираем закрывашку с формы
-    addressInput.value = DEFAULT_COORDS_X + ', ' + DEFAULT_COORDS_Y; // вписываем дефолтные координаты с главного пина
-    mapPinMain.removeEventListener('keydown', activatePageOnEnterPress); // удаляем стартовые обработчики
+    addressInput.value = DEFAULT_COORDS_X + ', ' + DEFAULT_COORDS_Y;
+    mapPinMain.removeEventListener('keydown', activatePageOnEnterPress);
     mapPinMain.removeEventListener('mousedown', activatePageOnLeftClick);
   };
 
-  mapPinMain.addEventListener('mousedown', activatePageOnLeftClick); // обработчик нажатия лкм по стартовому пину
-  mapPinMain.addEventListener('keydown', activatePageOnEnterPress); // обработчик нажатия энтера по стартовому пину
+  mapPinMain.addEventListener('mousedown', activatePageOnLeftClick);
+  mapPinMain.addEventListener('keydown', activatePageOnEnterPress);
 
   window.map = {
     activatePageOnLeftClick: activatePageOnLeftClick,
