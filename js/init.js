@@ -14,12 +14,11 @@
       mapPins.querySelectorAll('.map__pin:not(.map__pin--main)').forEach(function (it) {
         it.remove();
       });
+      map.querySelector('.map__card').remove();
       window.form.disableFieldsets();
-      mapPinMain.addEventListener('mousedown', window.map.activatePageOnLeftClick); // обработчик нажатия лкм по стартовому пину
-      mapPinMain.addEventListener('keydown', window.map.activatePageOnEnterPress); // обработчик нажатия энтера по стартовому пину
+      mapPinMain.addEventListener('mousedown', window.map.activatePageOnLeftClick);
+      mapPinMain.addEventListener('keydown', window.map.activatePageOnEnterPress);
     }
   };
-
-  window.backend.load(window.data.onLoad, window.utils.onError);
 
 })();
