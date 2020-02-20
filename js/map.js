@@ -10,7 +10,7 @@
 
   var card = window.card.getMapCardElement;
   var mapPins = document.querySelector('.map__pins');
-  var mapPinMain = mapPins.querySelector('.map__pin--main');
+  var mainPin = mapPins.querySelector('.map__pin--main');
   var form = document.querySelector('.ad-form');
   var addressInput = document.getElementById('address');
 
@@ -77,17 +77,17 @@
   var activatePage = function () { // функция для активации страницы
     window.backend.load(onLoad, window.utils.onError);
     addressInput.value = DEFAULT_COORDS_X + ', ' + DEFAULT_COORDS_Y;
-    mapPinMain.removeEventListener('keydown', activatePageOnEnterPress);
-    mapPinMain.removeEventListener('mousedown', activatePageOnLeftClick);
+    mainPin.removeEventListener('keydown', activatePageOnEnterPress);
+    mainPin.removeEventListener('mousedown', activatePageOnLeftClick);
   };
-
-  mapPinMain.addEventListener('mousedown', activatePageOnLeftClick);
-  mapPinMain.addEventListener('keydown', activatePageOnEnterPress);
 
   window.map = {
     activatePageOnLeftClick: activatePageOnLeftClick,
     activatePageOnEnterPress: activatePageOnEnterPress,
+    isLeftClick: isLeftClick,
     togglePin: togglePin
   };
+
+  mainPin.addEventListener('keydown', activatePageOnEnterPress);
 
 })();
