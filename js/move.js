@@ -79,5 +79,9 @@
 
   mainPin.addEventListener('mousedown', movePin);
 
+  window.move = {
+    movePin: movePin
+  };
+
 })();
 

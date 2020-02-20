@@ -5,7 +5,7 @@
   var map = document.querySelector('.map');
   var form = document.querySelector('.ad-form');
   var mapPins = document.querySelector('.map__pins');
-  var mapPinMain = mapPins.querySelector('.map__pin--main');
+  var mainPin = mapPins.querySelector('.map__pin--main');
 
   window.init = {
     deactivatePage: function () {
@@ -16,8 +16,8 @@
       });
       map.querySelector('.map__card').remove();
       window.form.disableFieldsets();
-      mapPinMain.addEventListener('mousedown', window.map.activatePageOnLeftClick);
-      mapPinMain.addEventListener('keydown', window.map.activatePageOnEnterPress);
+      mainPin.addEventListener('mousedown', window.move.movePin);
+      mainPin.addEventListener('keydown', window.map.activatePageOnEnterPress);
     }
   };
 
