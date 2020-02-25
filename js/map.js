@@ -5,14 +5,11 @@
   var LEFT_MOUSE_BUTTON = 0;
   var ENTER_KEY = 'Enter';
   var ESC_KEY = 'Escape';
-  var DEFAULT_COORDS_Y = 462;
-  var DEFAULT_COORDS_X = 602;
 
   var card = window.card.getMapCardElement;
   var mapPins = document.querySelector('.map__pins');
   var mainPin = mapPins.querySelector('.map__pin--main');
   var form = document.querySelector('.ad-form');
-  var addressInput = document.getElementById('address');
 
 
   var openCurrentPin = function (currentPin, array) { // функция - обработчик для переключения между пинами
@@ -76,7 +73,7 @@
 
   var activatePage = function () { // функция для активации страницы
     window.backend.load(onLoad, window.utils.onError);
-    addressInput.value = DEFAULT_COORDS_X + ', ' + DEFAULT_COORDS_Y;
+    window.slider.setInputCoords(window.slider.PIN_HALF_WIDTH, window.slider.ACTIVATED_PIN_HEIGHT);
     mainPin.removeEventListener('keydown', activatePageOnEnterPress);
     mainPin.removeEventListener('mousedown', activatePageOnLeftClick);
   };

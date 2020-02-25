@@ -14,6 +14,11 @@
   var ACTIVATED_PIN_HEIGHT = 87;
   var LEFT_MOUSE_BUTTON = 0;
 
+
+  var setInputCoords = function (widthOffset, heightOffset) {
+    addressInput.value = (mainPin.offsetLeft + widthOffset) + ', ' + (mainPin.offsetTop + heightOffset);
+  };
+
   var movePin = function (evt) {
     if (evt.button === LEFT_MOUSE_BUTTON) {
       evt.preventDefault();
@@ -38,17 +43,27 @@
         var finalCoords = new Coordinate(mainPin.offsetLeft - shift.x, mainPin.offsetTop - shift.y);
 
         var setOffset = function (xMin, xMax, yMin, yMax) {
-          if (finalCoords.x > xMin && finalCoords.x < xMax) {
-            mainPin.style.left = finalCoords.x + 'px';
+          if (finalCoords.x >= xMin && finalCoords.x <= xMax) { // проверяем границы блока
+
+            if (moveEvt.clientX <= map.offsetLeft && mainPin.offsetLeft === xMin) { // проверяем положение мышки вне границ, если мышка за границей блока и пин достиг границы, фиксируем его
+              mainPin.style.left = xMin + 'px';
+            } else if (moveEvt.clientX > map.offsetLeft + map.offsetWidth && mainPin.offsetLeft === xMax) {
+              mainPin.style.left = xMax + 'px';
+            } else {
+              mainPin.style.left = finalCoords.x + 'px';
+            }
           }
 
-          if (finalCoords.y > yMin && finalCoords.y < yMax) {
-            mainPin.style.top = finalCoords.y + 'px';
-          }
-        };
+          if (finalCoords.y >= yMin && finalCoords.y <= yMax) {
 
-        var setInputCoords = function (widthOffset, heightOffset) {
-          addressInput.value = (finalCoords.x + widthOffset) + ', ' + (finalCoords.y + heightOffset);
+            if (moveEvt.clientY >= yMax && mainPin.offsetTop === yMax) {
+              mainPin.style.top = yMax + 'px';
+            } else if (moveEvt.clientY <= yMin && mainPin.offsetTop === yMin) {
+              mainPin.style.top = yMin + 'px';
+            } else {
+              mainPin.style.top = finalCoords.y + 'px';
+            }
+          }
         };
 
         if (map.classList.contains('map--faded')) {
@@ -79,8 +94,11 @@
 
   mainPin.addEventListener('mousedown', movePin);
 
-  window.move = {
-    movePin: movePin
+  window.slider = {
+    movePin: movePin,
+    setInputCoords: setInputCoords,
+    PIN_HALF_WIDTH: PIN_HALF_WIDTH,
+    ACTIVATED_PIN_HEIGHT: ACTIVATED_PIN_HEIGHT
   };
 
 })();
