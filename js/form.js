@@ -33,22 +33,33 @@
     });
   };
 
-  var sendForm = function () { // валидация формы перед отправкой
+  var cleanMessageOnChange = function () {
+    roomsNumberInput.setCustomValidity('');
+    roomsNumberInput.removeEventListener('change', cleanMessageOnChange);
+  };
+
+  var sendForm = function (evt) {
+
     var roomInputValidation = function () {
+
       if ((roomsNumberInput.value === '100') && (roomsCapacityInput.value !== '0')) { // валидация комнат и гостей
         return 'Пожалуйста, выберите вариант "не для гостей"';
       } else if (roomsNumberInput.value < roomsCapacityInput.value) {
         return 'Количество комнат не может быть меньше гостей!';
-      } return false;
+      }
+
+      return false;
     };
 
     if (roomInputValidation()) {
-      return roomsNumberInput.setCustomValidity(roomInputValidation());
+      roomsNumberInput.setCustomValidity(roomInputValidation());
+      roomsNumberInput.addEventListener('change', cleanMessageOnChange);
     } else {
-      window.init.deactivatePage();
-      return roomsNumberInput.setCustomValidity('');
+      evt.preventDefault();
+      window.backend.save(new FormData(form), window.upload.onSuccess, window.utils.onError);
     }
 
+    return true;
   };
 
   var validatePriceOnChange = function () {
