@@ -82,6 +82,7 @@
     activatePageOnLeftClick: activatePageOnLeftClick,
     activatePageOnEnterPress: activatePageOnEnterPress,
     isLeftClick: isLeftClick,
+    isEscEvent: isEscEvent,
     togglePin: togglePin
   };
 
