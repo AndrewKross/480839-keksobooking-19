@@ -16,6 +16,10 @@
     var generatedPins = mapPins.querySelectorAll('.map__pin:not(.map__pin--main)');
     var generatePinsOnClick = function () {
       card.classList.remove('hidden');
+      generatedPins.forEach(function (it) {
+        it.classList.remove('map__pin--active');
+      });
+      generatedPins[currentPin].classList.add('map__pin--active');
       window.card.renderCard(array[currentPin]);// перерисовывает карточку с и-тым элементом массива
     };
     generatedPins[currentPin].addEventListener('click', generatePinsOnClick);

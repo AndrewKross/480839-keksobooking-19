@@ -16,13 +16,15 @@
     createPins: function (array) {
       map.classList.remove('map--faded'); // отображаем карту
       for (var i = 0; i < array.length && i < MAX_PINS_NUMBER; i++) {
-        var pin = pinTemplate.cloneNode(true);
-        var pinImg = pin.querySelector('img');
-        pin.style.left = array[i].location.x - (PIN_WIDTH / 2) + 'px';
-        pin.style.top = array[i].location.y - PIN_HEIGHT + 'px';
-        pinImg.src = array[i].author.avatar;
-        pinImg.alt = array[i].offer.title;
-        fragment.appendChild(pin);
+        if (array[i].offer) {
+          var pin = pinTemplate.cloneNode(true);
+          var pinImg = pin.querySelector('img');
+          pin.style.left = array[i].location.x - (PIN_WIDTH / 2) + 'px';
+          pin.style.top = array[i].location.y - PIN_HEIGHT + 'px';
+          pinImg.src = array[i].author.avatar;
+          pinImg.alt = array[i].offer.title;
+          fragment.appendChild(pin);
+        }
       }
       mapPins.append(fragment); // добавляем их в ДОМ
     },
