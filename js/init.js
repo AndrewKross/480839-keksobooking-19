@@ -6,12 +6,15 @@
   var form = document.querySelector('.ad-form');
   var mapPins = document.querySelector('.map__pins');
   var mainPin = mapPins.querySelector('.map__pin--main');
+  var mapFiltersForm = document.querySelector('.map__filters');
   var MAP_PIN_DEFAULT_X = 570;
   var MAP_PIN_DEFAULT_Y = 375;
 
   window.init = {
     deactivatePage: function () {
       form.classList.add('ad-form--disabled');
+      form.reset();
+      mapFiltersForm.reset();
       map.classList.add('map--faded');
       mapPins.querySelectorAll('.map__pin:not(.map__pin--main)').forEach(function (it) {
         it.remove();
