@@ -27,11 +27,11 @@
 
   var enableFieldsets = function () {
     formFieldsets.forEach(function (it) {
-      it.removeAttribute('disabled', '');
+      it.removeAttribute('disabled');
     });
     mapFilters.forEach(function (it) {
       it.classList.remove('visually-hidden');
-      it.removeAttribute('disabled', '');
+      it.removeAttribute('disabled');
     });
   };
 
