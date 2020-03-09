@@ -12,7 +12,7 @@
   var form = document.querySelector('.ad-form');
 
 
-  var openCurrentPin = function (currentPin, array) { // функция - обработчик для переключения между пинами
+  var openCurrentPin = function (currentPin, array) {
     var generatedPins = mapPins.querySelectorAll('.map__pin:not(.map__pin--main)');
     var generatePinsOnClick = function () {
       card.classList.remove('hidden');
@@ -20,13 +20,13 @@
         it.classList.remove('map__pin--active');
       });
       generatedPins[currentPin].classList.add('map__pin--active');
-      window.card.renderCard(array[currentPin]);// перерисовывает карточку с и-тым элементом массива
+      window.card.renderCard(array[currentPin]);
     };
     generatedPins[currentPin].addEventListener('click', generatePinsOnClick);
   };
 
-  var togglePin = function (array) { // фнукция для добавления обработчиков на все пины для открытия/закрытия карточки
-    for (var i = 0; i < array.length && i < window.pin.MAX_PINS_NUMBER; i++) { // добавляем пинам обработчики-ссылки на нужные данные для карточки
+  var togglePin = function (array) {
+    for (var i = 0; i < array.length && i < window.pin.MAX_PINS_NUMBER; i++) {
       openCurrentPin(i, array);
     }
     document.addEventListener('keydown', function (evt) {
@@ -66,16 +66,16 @@
   };
 
   var onLoad = function (response) {
-    window.data.getAdsElement = response;
-    window.pin.createPins(window.data.getAdsElement); // создаем метки
-    mapPins.after(card); // добавляем в ДОМ карточку
-    card.classList.add('hidden'); // и скрываем ее
-    togglePin(window.data.getAdsElement); // добавляем обработчики пинам и связываем с карточкой
-    window.form.enableFieldsets(); // включаем поля ввода
-    form.classList.remove('ad-form--disabled'); // убираем закрывашку с формы
+    window.data.adsData = response;
+    window.pin.createPins(window.data.adsData);
+    mapPins.after(card);
+    card.classList.add('hidden');
+    togglePin(window.data.adsData);
+    window.form.enableFieldsets();
+    form.classList.remove('ad-form--disabled');
   };
 
-  var activatePage = function () { // функция для активации страницы
+  var activatePage = function () {
     window.backend.load(onLoad, window.utils.onError);
     window.slider.setInputCoords(window.slider.PIN_HALF_WIDTH, window.slider.ACTIVATED_PIN_HEIGHT);
     mainPin.removeEventListener('keydown', activatePageOnEnterPress);

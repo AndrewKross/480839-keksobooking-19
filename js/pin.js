@@ -14,7 +14,7 @@
 
   window.pin = {
     createPins: function (array) {
-      map.classList.remove('map--faded'); // отображаем карту
+      map.classList.remove('map--faded');
       for (var i = 0; i < array.length && i < MAX_PINS_NUMBER; i++) {
         if (array[i].offer) {
           var pin = pinTemplate.cloneNode(true);
@@ -26,7 +26,7 @@
           fragment.appendChild(pin);
         }
       }
-      mapPins.append(fragment); // добавляем их в ДОМ
+      mapPins.append(fragment);
     },
     MAX_PINS_NUMBER: MAX_PINS_NUMBER
   };

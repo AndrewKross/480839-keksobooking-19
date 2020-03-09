@@ -3,7 +3,7 @@
 (function () {
 
   window.data = {
-    getAdsElement: []
+    adsData: []
   };
 
 })();

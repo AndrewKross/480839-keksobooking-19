@@ -15,21 +15,23 @@
   var mapFilters = mapFiltersForm.querySelectorAll('.map__filter, .map__features');
   var formReset = form.querySelector('.ad-form__reset');
 
-  var disableFieldsets = function () { // функция для отключения форм
+  var disableFieldsets = function () {
     formFieldsets.forEach(function (it) {
       it.setAttribute('disabled', '');
     });
     mapFilters.forEach(function (it) {
       it.classList.add('visually-hidden');
+      it.setAttribute('disabled', '');
     });
   };
 
-  var enableFieldsets = function () { // функция для включения форм
+  var enableFieldsets = function () {
     formFieldsets.forEach(function (it) {
       it.removeAttribute('disabled', '');
     });
     mapFilters.forEach(function (it) {
       it.classList.remove('visually-hidden');
+      it.removeAttribute('disabled', '');
     });
   };
 
@@ -42,7 +44,7 @@
 
     var roomInputValidation = function () {
 
-      if ((roomsNumberInput.value === '100') && (roomsCapacityInput.value !== '0')) { // валидация комнат и гостей
+      if ((roomsNumberInput.value === '100') && (roomsCapacityInput.value !== '0')) {
         return 'Пожалуйста, выберите вариант "не для гостей"';
       } else if (roomsNumberInput.value < roomsCapacityInput.value) {
         return 'Количество комнат не может быть меньше гостей!';
@@ -63,7 +65,7 @@
   };
 
   var validatePriceOnChange = function () {
-    switch (roomType.value) { // валидация цены
+    switch (roomType.value) {
       case ('bungalo'):
         formPrice.setAttribute('min', 0);
         formPrice.setAttribute('placeholder', 0);
@@ -100,11 +102,11 @@
   };
 
 
-  disableFieldsets(); // отключает форму при загрузке страницы
-  roomType.addEventListener('change', validatePriceOnChange); // обработчик валидации цены при изменении типа комнаты
-  roomTimeIn.addEventListener('change', syncRoomTimeOnChange); // валидация времени
+  disableFieldsets();
+  roomType.addEventListener('change', validatePriceOnChange);
+  roomTimeIn.addEventListener('change', syncRoomTimeOnChange);
   roomTimeOut.addEventListener('change', syncRoomTimeOnChange);
-  formSubmitButton.addEventListener('click', sendForm); // обработчик клика по кнопке отправки формы
+  formSubmitButton.addEventListener('click', sendForm);
   formReset.addEventListener('click', window.init.deactivatePage);
 
 })();

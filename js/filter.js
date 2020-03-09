@@ -9,29 +9,29 @@
   var housingGuests = mapFiltersForm.querySelector('#housing-guests');
   var housingFeatures = document.querySelectorAll('#housing-features input');
   var mapPins = document.querySelector('.map__pins');
-  var filtredData = window.data.getAdsElement;
+  var filtredData = window.data.adsData;
   var card = window.card.getMapCardElement;
+
+  var getFiltredData = function (filter, value) {
+    filtredData = window.data.adsData.filter(function (it) {
+      return (it.offer[filter] === value);
+    });
+    return filtredData;
+  };
 
   var filterByHousingType = function () {
 
-    var filterBy = function (houseType) {
-      filtredData = window.data.getAdsElement.filter(function (it) {
-        return (it.offer.type === houseType);
-      });
-      return filtredData;
-    };
-
     switch (housingType.value) {
-      case ('bungalo'):
-        return filterBy('bungalo');
-      case ('flat'):
-        return filterBy('flat');
-      case ('house'):
-        return filterBy('house');
-      case ('palace'):
-        return filterBy('palace');
-      case ('any'):
-        filtredData = window.data.getAdsElement;
+      case 'bungalo':
+        return getFiltredData('type', 'bungalo');
+      case 'flat':
+        return getFiltredData('type', 'flat');
+      case 'house':
+        return getFiltredData('type', 'house');
+      case 'palace':
+        return getFiltredData('type', 'palace');
+      case 'any':
+        filtredData = window.data.adsData;
         return filtredData;
     }
     return false;
@@ -40,21 +40,21 @@
   var filterByHousingPrice = function () {
 
     var filterBy = function (priceMin, priceMax) {
-      filtredData = window.data.getAdsElement.filter(function (it) {
+      filtredData = window.data.adsData.filter(function (it) {
         return (it.offer.price >= priceMin && it.offer.price <= priceMax);
       });
       return filtredData;
     };
 
     switch (housingPrice.value) {
-      case ('low'):
+      case 'low':
         return filterBy(0, 9999);
-      case ('middle'):
+      case 'middle':
         return filterBy(10000, 49999);
-      case ('high'):
+      case 'high':
         return filterBy(50000, 1000000);
-      case ('any'):
-        filtredData = window.data.getAdsElement;
+      case 'any':
+        filtredData = window.data.adsData;
         return filtredData;
     }
     return false;
@@ -62,22 +62,15 @@
 
   var filterByHousingRooms = function () {
 
-    var filterBy = function (roomsNumber) {
-      filtredData = window.data.getAdsElement.filter(function (it) {
-        return (it.offer.rooms === roomsNumber);
-      });
-      return filtredData;
-    };
-
     switch (housingRooms.value) {
-      case ('1'):
-        return filterBy(1);
-      case ('2'):
-        return filterBy(2);
-      case ('3'):
-        return filterBy(3);
-      case ('any'):
-        filtredData = window.data.getAdsElement;
+      case '1':
+        return getFiltredData('rooms', 1);
+      case '2':
+        return getFiltredData('rooms', 2);
+      case '3':
+        return getFiltredData('rooms', 3);
+      case 'any':
+        filtredData = window.data.adsData;
         return filtredData;
     }
     return false;
@@ -85,22 +78,15 @@
 
   var filterByHousingGuests = function () {
 
-    var filterBy = function (guestsNumber) {
-      filtredData = window.data.getAdsElement.filter(function (it) {
-        return (it.offer.guests === guestsNumber);
-      });
-      return filtredData;
-    };
-
     switch (housingGuests.value) {
-      case ('1'):
-        return filterBy(1);
-      case ('2'):
-        return filterBy(2);
-      case ('0'):
-        return filterBy(0);
-      case ('any'):
-        filtredData = window.data.getAdsElement;
+      case '1':
+        return getFiltredData('guests', 1);
+      case '2':
+        return getFiltredData('guests', 2);
+      case '0':
+        return getFiltredData('guests', 0);
+      case 'any':
+        filtredData = window.data.adsData;
         return filtredData;
     }
     return false;

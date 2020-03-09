@@ -27,7 +27,7 @@
     }
     return ' комнат для ';
   };
-  var renderFeatures = function (ad) { // проверяем массив с удобствами
+  var renderFeatures = function (ad) {
     for (var i = 0; i < FEATURES.length; i++) {
       if (ad.offer.features.indexOf(FEATURES[i]) < 0) {
         card.querySelector('.popup__feature--' + FEATURES[i]).classList.add('visually-hidden');
@@ -36,7 +36,7 @@
       }
     }
   };
-  var renderPhotos = function (ad) { // проверяем массив с фото и отрисовываем
+  var renderPhotos = function (ad) {
     var photoCopy = cardTemplate.querySelector('.popup__photo').cloneNode(true);
     var cards = card.querySelectorAll('.popup__photo');
     for (var j = 0; j < cards.length; j++) {
@@ -49,7 +49,7 @@
     }
   };
 
-  var renderCard = function (ad) { // функция отрисовки карточки, принимает на вход i-ый элемент массива ads
+  var renderCard = function (ad) {
     card.querySelector('.popup__title').textContent = ad.offer.title;
     card.querySelector('.popup__text--address').textContent = ad.offer.address;
     card.querySelector('.popup__text--price').textContent = (ad.offer.price) + '₽/ночь';
