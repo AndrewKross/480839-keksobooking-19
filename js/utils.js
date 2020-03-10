@@ -11,15 +11,6 @@
     return Math.floor(rand);
   };
 
-  var generateArray = function (array) { // функция генерации рандомного массива
-    var newArray = [];
-    var arraylength = getRandom(0, array.length + 1);
-    for (var i = 0; i < arraylength; i++) {
-      newArray.push(array[getRandom(0, array.length)]);
-    }
-    return newArray;
-  };
-
   var onError = function (errorMessage) { // функция отрисовки окна ошибки
 
     var closeErrorMessage = function () {
@@ -41,7 +32,6 @@
 
   window.utils = {
     getRandom: getRandom,
-    generateArray: generateArray,
     onError: onError
   };
 

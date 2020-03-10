@@ -2,6 +2,13 @@
 // ------------------ модуль фильтра
 (function () {
 
+  var LOW_PRICE_MIN = 0;
+  var LOW_PRICE_MAX = 9999;
+  var MEDIUM_PRICE_MIN = 10000;
+  var MEDIUM_PRICE_MAX = 49999;
+  var HIGHT_PRICE_MIN = 50000;
+  var HIGHT_PRICE_MAX = 1000000;
+
   var mapFiltersForm = document.querySelector('.map__filters');
   var housingType = mapFiltersForm.querySelector('#housing-type');
   var housingPrice = mapFiltersForm.querySelector('#housing-price');
@@ -48,11 +55,11 @@
 
     switch (housingPrice.value) {
       case 'low':
-        return filterBy(0, 9999);
+        return filterBy(LOW_PRICE_MIN, LOW_PRICE_MAX);
       case 'middle':
-        return filterBy(10000, 49999);
+        return filterBy(MEDIUM_PRICE_MIN, MEDIUM_PRICE_MAX);
       case 'high':
-        return filterBy(50000, 1000000);
+        return filterBy(HIGHT_PRICE_MIN, HIGHT_PRICE_MAX);
       case 'any':
         filtredData = window.data.adsData;
         return filtredData;

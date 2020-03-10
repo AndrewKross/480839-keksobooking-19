@@ -2,6 +2,11 @@
 // ------------------ модуль работы с формой и валидации
 (function () {
 
+  var BUNGALO_MIN_COST = 0;
+  var FLAT_MIN_COST = 1000;
+  var HOUSE_MIN_COST = 5000;
+  var PALACE_MIN_COST = 10000;
+
   var form = document.querySelector('.ad-form');
   var roomsNumberInput = form.querySelector('#room_number');
   var roomsCapacityInput = form.querySelector('#capacity');
@@ -67,24 +72,24 @@
   var validatePriceOnChange = function () {
     switch (roomType.value) {
       case ('bungalo'):
-        formPrice.setAttribute('min', 0);
-        formPrice.setAttribute('placeholder', 0);
+        formPrice.setAttribute('min', BUNGALO_MIN_COST);
+        formPrice.setAttribute('placeholder', BUNGALO_MIN_COST);
         break;
       case ('flat'):
-        formPrice.setAttribute('min', 1000);
-        formPrice.setAttribute('placeholder', 1000);
+        formPrice.setAttribute('min', FLAT_MIN_COST);
+        formPrice.setAttribute('placeholder', FLAT_MIN_COST);
         break;
       case ('house'):
-        formPrice.setAttribute('min', 5000);
-        formPrice.setAttribute('placeholder', 5000);
+        formPrice.setAttribute('min', HOUSE_MIN_COST);
+        formPrice.setAttribute('placeholder', HOUSE_MIN_COST);
         break;
       case ('palace'):
-        formPrice.setAttribute('min', 10000);
-        formPrice.setAttribute('placeholder', 10000);
+        formPrice.setAttribute('min', PALACE_MIN_COST);
+        formPrice.setAttribute('placeholder', PALACE_MIN_COST);
         break;
       default:
-        formPrice.setAttribute('min', 0);
-        formPrice.setAttribute('placeholder', 0);
+        formPrice.setAttribute('min', BUNGALO_MIN_COST);
+        formPrice.setAttribute('placeholder', BUNGALO_MIN_COST);
     }
   };
 

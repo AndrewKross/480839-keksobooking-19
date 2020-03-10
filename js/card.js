@@ -19,6 +19,7 @@
     }
     return ad.offer.type;
   };
+
   var getRoomsFor = function (ad) {
     if (ad.offer.rooms === 1) {
       return ' комната для ';
@@ -27,26 +28,30 @@
     }
     return ' комнат для ';
   };
+
   var renderFeatures = function (ad) {
-    for (var i = 0; i < FEATURES.length; i++) {
-      if (ad.offer.features.indexOf(FEATURES[i]) < 0) {
-        card.querySelector('.popup__feature--' + FEATURES[i]).classList.add('visually-hidden');
+    FEATURES.forEach(function (it) {
+      if (ad.offer.features.includes(it)) {
+        card.querySelector('.popup__feature--' + it).classList.remove('visually-hidden');
       } else {
-        card.querySelector('.popup__feature--' + FEATURES[i]).classList.remove('visually-hidden');
+        card.querySelector('.popup__feature--' + it).classList.add('visually-hidden');
       }
-    }
+    });
   };
+
   var renderPhotos = function (ad) {
     var photoCopy = cardTemplate.querySelector('.popup__photo').cloneNode(true);
     var cards = card.querySelectorAll('.popup__photo');
-    for (var j = 0; j < cards.length; j++) {
-      cards[j].remove();
-    }
-    for (var i = 0; i < ad.offer.photos.length; i++) {
+
+    cards.forEach(function (it) {
+      it.remove();
+    });
+
+    ad.offer.photos.forEach(function (it) {
       var photo = photoCopy.cloneNode(true);
-      photo.src = ad.offer.photos[i];
+      photo.src = it;
       card.querySelector('.popup__photos').append(photo);
-    }
+    });
   };
 
   var renderCard = function (ad) {
